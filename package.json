@@ -1,0 +1,44 @@
+{
+  "name": "antigravity-restores-conversation",
+  "displayName": "Antigravity Restores Conversation",
+  "description": "Restore lost conversation history and missing workspaces for Antigravity IDE",
+  "version": "1.0.0",
+  "main": "./dist/cli.js",
+  "bin": "dist/cli.js",
+  "pkg": {
+    "scripts": [],
+    "assets": [
+      "node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+      "node_modules/better-sqlite3/lib/**/*.js"
+    ],
+    "targets": [
+      "node18-win-x64",
+      "node18-linux-x64",
+      "node18-macos-x64"
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/cli/index.ts --bundle --outfile=dist/cli.js --external:better-sqlite3 --platform=node",
+    "dev": "npm run build && node dist/cli.js",
+    "compile": "tsc -p ./",
+    "build:exe:win": "npm rebuild better-sqlite3 --target=18.15.0 && npm run build && npx pkg . --targets node18-win-x64 --output bin/antigravity-restores-conversation-win.exe",
+    "build:exe:mac": "npm rebuild better-sqlite3 --target=18.15.0 && npm run build && npx pkg . --targets node18-macos-x64 --output bin/antigravity-restores-conversation-macos",
+    "build:exe:linux": "npm rebuild better-sqlite3 --target=18.15.0 && npm run build && npx pkg . --targets node18-linux-x64 --output bin/antigravity-restores-conversation-linux",
+    "postbuild:exe": "npm rebuild better-sqlite3"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "better-sqlite3": "^11.5.0",
+    "chalk": "^4.1.2",
+    "glob": "^10.0.0",
+    "picocolors": "^1.0.0",
+    "protobufjs": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.23.0",
+    "pkg": "^5.8.1",
+    "typescript": "^5.2.2"
+  }
+}
