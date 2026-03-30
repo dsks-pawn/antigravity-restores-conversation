@@ -36,7 +36,7 @@ If you want to modify the source code or build the binaries yourself:
    ```bash
    npm install
    ```
-2. Build the cross-platform executable binaries (requires `pkg`):
+2. Build the cross-platform executable binaries (requires Node.js 20+ for Single Executable Application support):
 
    ```bash
    npm run build:exe
@@ -44,7 +44,11 @@ If you want to modify the source code or build the binaries yourself:
 
    _The outputs will be placed in the `bin/` directory._
 
-3. Run the development CLI locally:
+3. Release automation:
+   - This project uses GitHub Actions to build and release binaries automatically.
+   - To create a release, just push a new tag (e.g., `v1.0.1`) and the binaries for Windows, macOS, and Linux will be automatically attached to the release.
+
+4. Run the development CLI locally:
    ```bash
    npm run dev
    ```
