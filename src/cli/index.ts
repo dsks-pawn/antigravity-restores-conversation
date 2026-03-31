@@ -180,8 +180,21 @@ async function main() {
     await waitForKeypress();
     process.exit(0);
   } catch (error: any) {
-    s.stop(pc.bgRed(pc.white(' \u2716 ĐÃ CÓ LỖI XẢY RA KHI CAN THIỆP DB ')));
-    cancel(error.message);
+    if (error.message === 'DB_LOCKED') {
+      s.stop(
+        pc.bgRed(
+          pc.white(' \u26A0\ufe0f LỖI: DATABASE ĐANG BỊ KHÓA (SQLITE_BUSY) '),
+        ),
+      );
+      cancel(
+        pc.yellow(
+          'Antigravity IDE vẫn còn đang chạy ngầm hoặc chưa được tắt hoàn toàn. Vui lòng tắt sạch các tiến trình "code.exe" trong Task Manager và thử chạy lại script này.',
+        ),
+      );
+    } else {
+      s.stop(pc.bgRed(pc.white(' \u2716 ĐÃ CÓ LỖI XẢY RA KHI CAN THIỆP DB ')));
+      cancel(error.message);
+    }
     await waitForKeypress();
     process.exit(1);
   }
